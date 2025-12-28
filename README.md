@@ -1,5 +1,7 @@
 # 🎬 YouTube Analytics Dashboard
 
+### 🌐 **[View Live Dashboard →](https://ericdataplus.github.io/youtube-accounts-analytics/)**
+
 Advanced Machine Learning Analysis on YouTube Channel & Video Data
 
 [![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-blue?style=for-the-badge)](https://ericdataplus.github.io/youtube-accounts-analytics/)
@@ -121,4 +123,4 @@ This project is for educational and research purposes. Data sourced from Kaggle 
 - Open source ML/visualization libraries: scikit-learn, matplotlib, seaborn, networkx
 
 ---
-Created with 🔬 Advanced Machine Learning | December 2024
+Created with 🔬 Advanced Machine Learning | December 2025
