@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Analytics Dashboard | Advanced ML Analysis</title>
-    <meta name="description" content="Comprehensive YouTube channel and video analytics using advanced machine learning techniques including Power Law analysis, Topic Modeling, Sentiment Analysis, and more.">
+    <meta name="description"
+        content="Comprehensive YouTube channel and video analytics using advanced machine learning techniques including Power Law analysis, Topic Modeling, Sentiment Analysis, and more.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -96,7 +98,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-links {
@@ -154,12 +156,12 @@
             border-radius: 16px;
             padding: 25px;
             transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .card-title {
@@ -290,7 +292,7 @@
             background: var(--bg-secondary);
             padding: 40px 20px;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .footer p {
@@ -305,7 +307,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -335,15 +337,18 @@
             .header h1 {
                 font-size: 2rem;
             }
+
             .cards-grid {
                 grid-template-columns: 1fr;
             }
+
             .stat-value {
                 font-size: 1.8rem;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -424,23 +429,31 @@
             <div class="cards-grid">
                 <div class="card">
                     <h3 class="card-title">Daily Trending Patterns</h3>
-                    <img src="data/processed/analysis/specialized/timeseries_trends.png" alt="Time Series Trends" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Daily trending video counts with trend line and 7-day moving average. Shows 0.82 videos/day increase over the analysis period.</p>
+                    <img src="data/processed/analysis/specialized/timeseries_trends.png" alt="Time Series Trends"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Daily trending video counts with trend line and 7-day moving average.
+                        Shows 0.82 videos/day increase over the analysis period.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Category Evolution</h3>
-                    <img src="data/processed/analysis/specialized/category_evolution.png" alt="Category Evolution" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">How category popularity changed over time. Category 30 grew +1000%, while Category 27 declined -18%.</p>
+                    <img src="data/processed/analysis/specialized/category_evolution.png" alt="Category Evolution"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">How category popularity changed over time. Category 30 grew +1000%,
+                        while Category 27 declined -18%.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Subscriber Growth Model</h3>
-                    <img src="data/processed/analysis/specialized/growth_model.png" alt="Growth Model" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Power law model of subscriber growth. Exponent β=0.128 indicates sublinear growth - channels grow slower as they age.</p>
+                    <img src="data/processed/analysis/specialized/growth_model.png" alt="Growth Model"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Power law model of subscriber growth. Exponent β=0.128 indicates
+                        sublinear growth - channels grow slower as they age.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Temporal Patterns</h3>
-                    <img src="data/processed/analysis/advanced/temporal_patterns.png" alt="Temporal Patterns" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Day of week and monthly patterns in trending videos. Saturday is the best day for trending.</p>
+                    <img src="data/processed/analysis/advanced/temporal_patterns.png" alt="Temporal Patterns"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Day of week and monthly patterns in trending videos. Saturday is the
+                        best day for trending.</p>
                 </div>
             </div>
         </section>
@@ -451,43 +464,58 @@
             <div class="cards-grid">
                 <div class="card">
                     <h3 class="card-title">N-Gram Analysis</h3>
-                    <img src="data/processed/analysis/specialized/ngram_analysis.png" alt="N-Gram Analysis" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Top 1/2/3-grams in trending titles. "2018", "official video", and "official music video" dominate.</p>
+                    <img src="data/processed/analysis/specialized/ngram_analysis.png" alt="N-Gram Analysis"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Top 1/2/3-grams in trending titles. "2018", "official video", and
+                        "official music video" dominate.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Title Structure</h3>
-                    <img src="data/processed/analysis/specialized/title_structure.png" alt="Title Structure" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Title patterns and optimal length analysis. Shorter titles (&lt;30 chars) get significantly more views.</p>
+                    <img src="data/processed/analysis/specialized/title_structure.png" alt="Title Structure"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Title patterns and optimal length analysis. Shorter titles (&lt;30
+                        chars) get significantly more views.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Clickbait Detection</h3>
-                    <img src="data/processed/analysis/specialized/clickbait_analysis.png" alt="Clickbait Analysis" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Clickbait indicator frequency and its correlation with views. Higher clickbait = more views.</p>
+                    <img src="data/processed/analysis/specialized/clickbait_analysis.png" alt="Clickbait Analysis"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Clickbait indicator frequency and its correlation with views. Higher
+                        clickbait = more views.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Semantic Clustering</h3>
-                    <img src="data/processed/analysis/specialized/semantic_clusters.png" alt="Semantic Clusters" class="card-image" onclick="openModal(this)">
+                    <img src="data/processed/analysis/specialized/semantic_clusters.png" alt="Semantic Clusters"
+                        class="card-image" onclick="openModal(this)">
                     <p class="card-description">NMF-based topic clustering of 30K titles into 8 semantic groups.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Topic Modeling (LDA)</h3>
-                    <img src="data/processed/analysis/advanced/topic_modeling.png" alt="Topic Modeling" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Latent Dirichlet Allocation discovering hidden themes in 157K trending titles.</p>
+                    <img src="data/processed/analysis/advanced/topic_modeling.png" alt="Topic Modeling"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Latent Dirichlet Allocation discovering hidden themes in 157K trending
+                        titles.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Word Co-occurrence Network</h3>
-                    <img src="data/processed/analysis/specialized/word_network.png" alt="Word Network" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Network visualization of which words frequently appear together in titles.</p>
+                    <img src="data/processed/analysis/specialized/word_network.png" alt="Word Network"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Network visualization of which words frequently appear together in
+                        titles.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Sentiment Analysis</h3>
-                    <img src="data/processed/analysis/advanced/sentiment_analysis.png" alt="Sentiment Analysis" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Lexicon-based sentiment analysis of video titles. ~80% neutral, ~15% positive.</p>
+                    <img src="data/processed/analysis/advanced/sentiment_analysis.png" alt="Sentiment Analysis"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Lexicon-based sentiment analysis of video titles. ~80% neutral, ~15%
+                        positive.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Psychological Triggers</h3>
-                    <img src="data/processed/analysis/title_triggers.png" alt="Title Triggers" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Psychological trigger patterns in trending titles: urgency, numbers, questions, etc.</p>
+                    <img src="data/processed/analysis/title_triggers.png" alt="Title Triggers" class="card-image"
+                        onclick="openModal(this)">
+                    <p class="card-description">Psychological trigger patterns in trending titles: urgency, numbers,
+                        questions, etc.</p>
                 </div>
             </div>
         </section>
@@ -513,43 +541,57 @@
             <div class="cards-grid" style="margin-top: 30px;">
                 <div class="card">
                     <h3 class="card-title">Power Law Analysis</h3>
-                    <img src="data/processed/analysis/advanced/power_law_analysis.png" alt="Power Law" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Testing if YouTube subscriber distribution follows Zipf's Law (scale-free network theory).</p>
+                    <img src="data/processed/analysis/advanced/power_law_analysis.png" alt="Power Law"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Testing if YouTube subscriber distribution follows Zipf's Law
+                        (scale-free network theory).</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Benford's Law</h3>
-                    <img src="data/processed/analysis/advanced/benfords_law.png" alt="Benford's Law" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">First-digit law analysis for detecting anomalies or artificial patterns in view counts.</p>
+                    <img src="data/processed/analysis/advanced/benfords_law.png" alt="Benford's Law" class="card-image"
+                        onclick="openModal(this)">
+                    <p class="card-description">First-digit law analysis for detecting anomalies or artificial patterns
+                        in view counts.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">PageRank Influence</h3>
-                    <img src="data/processed/analysis/advanced/pagerank_influence.png" alt="PageRank" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Google's PageRank algorithm applied to find the most influential trending channels.</p>
+                    <img src="data/processed/analysis/advanced/pagerank_influence.png" alt="PageRank" class="card-image"
+                        onclick="openModal(this)">
+                    <p class="card-description">Google's PageRank algorithm applied to find the most influential
+                        trending channels.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Pareto Frontier</h3>
-                    <img src="data/processed/analysis/advanced/pareto_frontier.png" alt="Pareto Frontier" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Multi-objective optimization finding channels with best efficiency trade-offs.</p>
+                    <img src="data/processed/analysis/advanced/pareto_frontier.png" alt="Pareto Frontier"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Multi-objective optimization finding channels with best efficiency
+                        trade-offs.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">UMAP Embeddings</h3>
-                    <img src="data/processed/analysis/advanced/umap_embedding.png" alt="UMAP" class="card-image" onclick="openModal(this)">
+                    <img src="data/processed/analysis/advanced/umap_embedding.png" alt="UMAP" class="card-image"
+                        onclick="openModal(this)">
                     <p class="card-description">Manifold learning creating 2D channel embeddings for visualization.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Channel Similarity</h3>
-                    <img src="data/processed/analysis/advanced/channel_similarity.png" alt="Channel Similarity" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Collaborative filtering similarity matrix based on co-occurrence in trending.</p>
+                    <img src="data/processed/analysis/advanced/channel_similarity.png" alt="Channel Similarity"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Collaborative filtering similarity matrix based on co-occurrence in
+                        trending.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Viral Feature Importance</h3>
-                    <img src="data/processed/analysis/advanced/viral_features.png" alt="Viral Features" class="card-image" onclick="openModal(this)">
+                    <img src="data/processed/analysis/advanced/viral_features.png" alt="Viral Features"
+                        class="card-image" onclick="openModal(this)">
                     <p class="card-description">Random Forest model identifying which title features predict views.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Anomaly Detection</h3>
-                    <img src="data/processed/analysis/anomaly_detection.png" alt="Anomaly Detection" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Isolation Forest detecting statistical outliers in engagement patterns.</p>
+                    <img src="data/processed/analysis/anomaly_detection.png" alt="Anomaly Detection" class="card-image"
+                        onclick="openModal(this)">
+                    <p class="card-description">Isolation Forest detecting statistical outliers in engagement patterns.
+                    </p>
                 </div>
             </div>
         </section>
@@ -560,33 +602,43 @@
             <div class="cards-grid">
                 <div class="card">
                     <h3 class="card-title">Geographic Power Distribution</h3>
-                    <img src="data/processed/analysis/geographic_power.png" alt="Geographic Power" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Lorenz curve and Gini coefficient showing geographic concentration of YouTube success.</p>
+                    <img src="data/processed/analysis/geographic_power.png" alt="Geographic Power" class="card-image"
+                        onclick="openModal(this)">
+                    <p class="card-description">Lorenz curve and Gini coefficient showing geographic concentration of
+                        YouTube success.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Cross-Country Influence</h3>
-                    <img src="data/processed/analysis/country_influence.png" alt="Country Influence" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Top countries ranked by total YouTube influencer following (2024 data).</p>
+                    <img src="data/processed/analysis/country_influence.png" alt="Country Influence" class="card-image"
+                        onclick="openModal(this)">
+                    <p class="card-description">Top countries ranked by total YouTube influencer following (2024 data).
+                    </p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Trending Ecosystem Network</h3>
-                    <img src="data/processed/analysis/trending_ecosystem.png" alt="Trending Ecosystem" class="card-image" onclick="openModal(this)">
+                    <img src="data/processed/analysis/trending_ecosystem.png" alt="Trending Ecosystem"
+                        class="card-image" onclick="openModal(this)">
                     <p class="card-description">Network visualization of which channels frequently trend together.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Hidden Channel Tribes</h3>
-                    <img src="data/processed/analysis/hidden_tribes.png" alt="Hidden Tribes" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Behavioral clustering revealing hidden groupings beyond official categories.</p>
+                    <img src="data/processed/analysis/hidden_tribes.png" alt="Hidden Tribes" class="card-image"
+                        onclick="openModal(this)">
+                    <p class="card-description">Behavioral clustering revealing hidden groupings beyond official
+                        categories.</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Cross-Platform Correlation</h3>
-                    <img src="data/processed/analysis/advanced/cross_platform.png" alt="Cross Platform" class="card-image" onclick="openModal(this)">
+                    <img src="data/processed/analysis/advanced/cross_platform.png" alt="Cross Platform"
+                        class="card-image" onclick="openModal(this)">
                     <p class="card-description">Spotify streams vs YouTube views correlation analysis (ρ = 0.608).</p>
                 </div>
                 <div class="card">
                     <h3 class="card-title">Influencer Tiers (2024)</h3>
-                    <img src="data/processed/analysis/advanced/influencer_tiers.png" alt="Influencer Tiers" class="card-image" onclick="openModal(this)">
-                    <p class="card-description">Distribution of mega, macro, mid, micro, and nano influencers across 61 countries.</p>
+                    <img src="data/processed/analysis/advanced/influencer_tiers.png" alt="Influencer Tiers"
+                        class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Distribution of mega, macro, mid, micro, and nano influencers across 61
+                        countries.</p>
                 </div>
             </div>
         </section>
@@ -598,32 +650,38 @@
                 <div class="source-item">
                     <h3>Global YouTube Statistics 2023</h3>
                     <p>Top 995 YouTube channels worldwide with subscribers, views, category, and country data.</p>
-                    <a href="https://www.kaggle.com/datasets/nelgiriyewithana/global-youtube-statistics-2023" target="_blank">Kaggle Dataset →</a>
+                    <a href="https://www.kaggle.com/datasets/nelgiriyewithana/global-youtube-statistics-2023"
+                        target="_blank">Kaggle Dataset →</a>
                 </div>
                 <div class="source-item">
                     <h3>YouTube Trending Videos (Historical)</h3>
-                    <p>375,942 trending videos from 10 countries (US, GB, CA, DE, FR, IN, JP, KR, MX, RU) - Nov 2017 to Jun 2018.</p>
+                    <p>375,942 trending videos from 10 countries (US, GB, CA, DE, FR, IN, JP, KR, MX, RU) - Nov 2017 to
+                        Jun 2018.</p>
                     <a href="https://www.kaggle.com/datasets/datasnaek/youtube-new" target="_blank">Kaggle Dataset →</a>
                 </div>
                 <div class="source-item">
                     <h3>Most Subscribed YouTube Channels</h3>
                     <p>Top 1,000 most subscribed YouTube channels with subscribers, video count, and start year.</p>
-                    <a href="https://www.kaggle.com/datasets/themrityunjaypathak/most-subscribed-1000-youtube-channels" target="_blank">Kaggle Dataset →</a>
+                    <a href="https://www.kaggle.com/datasets/themrityunjaypathak/most-subscribed-1000-youtube-channels"
+                        target="_blank">Kaggle Dataset →</a>
                 </div>
                 <div class="source-item">
                     <h3>Top 100 Social Media Influencers 2024</h3>
                     <p>YouTube, Instagram, TikTok, and Threads influencers from 61 countries.</p>
-                    <a href="https://www.kaggle.com/datasets/bhavyadhingra00020/top-100-social-media-influencers-2024-countrywise" target="_blank">Kaggle Dataset →</a>
+                    <a href="https://www.kaggle.com/datasets/bhavyadhingra00020/top-100-social-media-influencers-2024-countrywise"
+                        target="_blank">Kaggle Dataset →</a>
                 </div>
                 <div class="source-item">
                     <h3>Spotify & YouTube Music Data</h3>
                     <p>20,718 tracks with Spotify streams and YouTube views for cross-platform analysis.</p>
-                    <a href="https://www.kaggle.com/datasets/salvatorerastelli/spotify-and-youtube" target="_blank">Kaggle Dataset →</a>
+                    <a href="https://www.kaggle.com/datasets/salvatorerastelli/spotify-and-youtube"
+                        target="_blank">Kaggle Dataset →</a>
                 </div>
                 <div class="source-item">
                     <h3>GitHub: Top Subscribed Channels</h3>
                     <p>Top 1,000 subscribed YouTube channels dataset from GitHub.</p>
-                    <a href="https://github.com/juliusbroomfield/channel-growth-model" target="_blank">GitHub Repository →</a>
+                    <a href="https://github.com/juliusbroomfield/channel-growth-model" target="_blank">GitHub Repository
+                        →</a>
                 </div>
             </div>
         </section>
@@ -633,8 +691,9 @@
     <footer class="footer">
         <p>Created with 🔬 Advanced Machine Learning | Data Analysis Project</p>
         <p style="margin-top: 10px; font-size: 0.85rem;">
-            Analysis performed: December 2024 | 
-            <a href="https://github.com" style="color: #4facfe;">View on GitHub</a>
+            Analysis performed: December 2024 |
+            <a href="https://github.com/Ericdataplus/youtube-accounts-analytics" style="color: #4facfe;">View on
+                GitHub</a>
         </p>
     </footer>
 
@@ -654,13 +713,14 @@
             document.getElementById('imageModal').classList.remove('active');
         }
 
-        document.getElementById('imageModal').addEventListener('click', function(e) {
+        document.getElementById('imageModal').addEventListener('click', function (e) {
             if (e.target === this) closeModal();
         });
 
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeModal();
         });
     </script>
 </body>
+
 </html>
