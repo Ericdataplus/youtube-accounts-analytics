@@ -1,0 +1,31 @@
+# Environment
+.env
+venv/
+
+# Data files (too large for git)
+data/raw/
+*.csv
+*.json
+*.zip
+
+# But include analysis output (for GitHub Pages)
+!data/processed/
+!data/processed/analysis/
+!data/processed/analysis/**/*.png
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

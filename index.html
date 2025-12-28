@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Analytics Dashboard | Advanced ML Analysis</title>
+    <meta name="description" content="Comprehensive YouTube channel and video analytics using advanced machine learning techniques including Power Law analysis, Topic Modeling, Sentiment Analysis, and more.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --bg-card: #16213e;
+            --accent: #e94560;
+            --accent-2: #0f3460;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-1);
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--bg-secondary);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title span {
+            font-size: 2.5rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .card-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .card-image:hover {
+            transform: scale(1.02);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Key Findings */
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .finding-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--accent-2) 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .finding-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .finding-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .finding-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Data Sources */
+        .sources {
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 16px;
+            margin-top: 40px;
+        }
+
+        .sources h2 {
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .source-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .source-item {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .source-item h3 {
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .source-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .source-item a {
+            color: #4facfe;
+            text-decoration: none;
+        }
+
+        .source-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Methods */
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .method-tag {
+            background: var(--accent-2);
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .method-tag:hover {
+            background: var(--accent);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .stat-value {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>🎬 YouTube Analytics Dashboard</h1>
+        <p>Advanced Machine Learning Analysis on YouTube Channel & Video Data</p>
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value">700+</div>
+                <div class="stat-label">MB of Data</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">375K+</div>
+                <div class="stat-label">Videos Analyzed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">28</div>
+                <div class="stat-label">Visualizations</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">61</div>
+                <div class="stat-label">Countries</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-links">
+            <a href="#findings">Key Findings</a>
+            <a href="#timeseries">Time-Series</a>
+            <a href="#nlp">NLP Analysis</a>
+            <a href="#research">Research Methods</a>
+            <a href="#sources">Data Sources</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Key Findings Section -->
+        <section id="findings" class="section">
+            <h2 class="section-title"><span>🔍</span> Key Findings</h2>
+            <div class="findings-grid">
+                <div class="finding-card">
+                    <div class="finding-value">0.608</div>
+                    <div class="finding-title">Cross-Platform Correlation</div>
+                    <div class="finding-label">Spotify streams ↔ YouTube views (Spearman ρ)</div>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-value">&lt;30 chars</div>
+                    <div class="finding-title">Optimal Title Length</div>
+                    <div class="finding-label">Shorter titles get 360K median views vs 93K for 100+ chars</div>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-value">Power Law</div>
+                    <div class="finding-title">Scale-Free Network</div>
+                    <div class="finding-label">YouTube follows "rich get richer" dynamics (Zipf's Law)</div>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-value">Saturday</div>
+                    <div class="finding-title">Best Trending Day</div>
+                    <div class="finding-label">55K+ videos trend on Saturdays vs 53K on Thursdays</div>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-value">1.5M</div>
+                    <div class="finding-title">Clickbait Premium</div>
+                    <div class="finding-label">High clickbait score → 8x more median views</div>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-value">β = 0.128</div>
+                    <div class="finding-title">Growth Exponent</div>
+                    <div class="finding-label">Sublinear growth: older channels grow slower</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Time-Series Analysis -->
+        <section id="timeseries" class="section">
+            <h2 class="section-title"><span>📈</span> Time-Series Analysis</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 class="card-title">Daily Trending Patterns</h3>
+                    <img src="data/processed/analysis/specialized/timeseries_trends.png" alt="Time Series Trends" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Daily trending video counts with trend line and 7-day moving average. Shows 0.82 videos/day increase over the analysis period.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Category Evolution</h3>
+                    <img src="data/processed/analysis/specialized/category_evolution.png" alt="Category Evolution" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">How category popularity changed over time. Category 30 grew +1000%, while Category 27 declined -18%.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Subscriber Growth Model</h3>
+                    <img src="data/processed/analysis/specialized/growth_model.png" alt="Growth Model" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Power law model of subscriber growth. Exponent β=0.128 indicates sublinear growth - channels grow slower as they age.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Temporal Patterns</h3>
+                    <img src="data/processed/analysis/advanced/temporal_patterns.png" alt="Temporal Patterns" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Day of week and monthly patterns in trending videos. Saturday is the best day for trending.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NLP Analysis -->
+        <section id="nlp" class="section">
+            <h2 class="section-title"><span>📝</span> NLP Deep-Dive</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 class="card-title">N-Gram Analysis</h3>
+                    <img src="data/processed/analysis/specialized/ngram_analysis.png" alt="N-Gram Analysis" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Top 1/2/3-grams in trending titles. "2018", "official video", and "official music video" dominate.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Title Structure</h3>
+                    <img src="data/processed/analysis/specialized/title_structure.png" alt="Title Structure" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Title patterns and optimal length analysis. Shorter titles (&lt;30 chars) get significantly more views.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Clickbait Detection</h3>
+                    <img src="data/processed/analysis/specialized/clickbait_analysis.png" alt="Clickbait Analysis" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Clickbait indicator frequency and its correlation with views. Higher clickbait = more views.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Semantic Clustering</h3>
+                    <img src="data/processed/analysis/specialized/semantic_clusters.png" alt="Semantic Clusters" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">NMF-based topic clustering of 30K titles into 8 semantic groups.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Topic Modeling (LDA)</h3>
+                    <img src="data/processed/analysis/advanced/topic_modeling.png" alt="Topic Modeling" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Latent Dirichlet Allocation discovering hidden themes in 157K trending titles.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Word Co-occurrence Network</h3>
+                    <img src="data/processed/analysis/specialized/word_network.png" alt="Word Network" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Network visualization of which words frequently appear together in titles.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Sentiment Analysis</h3>
+                    <img src="data/processed/analysis/advanced/sentiment_analysis.png" alt="Sentiment Analysis" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Lexicon-based sentiment analysis of video titles. ~80% neutral, ~15% positive.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Psychological Triggers</h3>
+                    <img src="data/processed/analysis/title_triggers.png" alt="Title Triggers" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Psychological trigger patterns in trending titles: urgency, numbers, questions, etc.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Methods -->
+        <section id="research" class="section">
+            <h2 class="section-title"><span>🔬</span> Research Methods Applied</h2>
+            <div class="methods-grid">
+                <div class="method-tag">Zipf's Law / Power Law</div>
+                <div class="method-tag">Latent Dirichlet Allocation</div>
+                <div class="method-tag">Benford's Law</div>
+                <div class="method-tag">PageRank Algorithm</div>
+                <div class="method-tag">UMAP/t-SNE Embeddings</div>
+                <div class="method-tag">Pareto Frontier Analysis</div>
+                <div class="method-tag">Collaborative Filtering</div>
+                <div class="method-tag">Shannon Entropy</div>
+                <div class="method-tag">Time Series Decomposition</div>
+                <div class="method-tag">NMF Topic Modeling</div>
+                <div class="method-tag">Isolation Forest</div>
+                <div class="method-tag">Random Forest Regression</div>
+            </div>
+
+            <div class="cards-grid" style="margin-top: 30px;">
+                <div class="card">
+                    <h3 class="card-title">Power Law Analysis</h3>
+                    <img src="data/processed/analysis/advanced/power_law_analysis.png" alt="Power Law" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Testing if YouTube subscriber distribution follows Zipf's Law (scale-free network theory).</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Benford's Law</h3>
+                    <img src="data/processed/analysis/advanced/benfords_law.png" alt="Benford's Law" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">First-digit law analysis for detecting anomalies or artificial patterns in view counts.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">PageRank Influence</h3>
+                    <img src="data/processed/analysis/advanced/pagerank_influence.png" alt="PageRank" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Google's PageRank algorithm applied to find the most influential trending channels.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Pareto Frontier</h3>
+                    <img src="data/processed/analysis/advanced/pareto_frontier.png" alt="Pareto Frontier" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Multi-objective optimization finding channels with best efficiency trade-offs.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">UMAP Embeddings</h3>
+                    <img src="data/processed/analysis/advanced/umap_embedding.png" alt="UMAP" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Manifold learning creating 2D channel embeddings for visualization.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Channel Similarity</h3>
+                    <img src="data/processed/analysis/advanced/channel_similarity.png" alt="Channel Similarity" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Collaborative filtering similarity matrix based on co-occurrence in trending.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Viral Feature Importance</h3>
+                    <img src="data/processed/analysis/advanced/viral_features.png" alt="Viral Features" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Random Forest model identifying which title features predict views.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Anomaly Detection</h3>
+                    <img src="data/processed/analysis/anomaly_detection.png" alt="Anomaly Detection" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Isolation Forest detecting statistical outliers in engagement patterns.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Visualizations -->
+        <section class="section">
+            <h2 class="section-title"><span>🌍</span> Geographic & Ecosystem Analysis</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 class="card-title">Geographic Power Distribution</h3>
+                    <img src="data/processed/analysis/geographic_power.png" alt="Geographic Power" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Lorenz curve and Gini coefficient showing geographic concentration of YouTube success.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Cross-Country Influence</h3>
+                    <img src="data/processed/analysis/country_influence.png" alt="Country Influence" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Top countries ranked by total YouTube influencer following (2024 data).</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Trending Ecosystem Network</h3>
+                    <img src="data/processed/analysis/trending_ecosystem.png" alt="Trending Ecosystem" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Network visualization of which channels frequently trend together.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Hidden Channel Tribes</h3>
+                    <img src="data/processed/analysis/hidden_tribes.png" alt="Hidden Tribes" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Behavioral clustering revealing hidden groupings beyond official categories.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Cross-Platform Correlation</h3>
+                    <img src="data/processed/analysis/advanced/cross_platform.png" alt="Cross Platform" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Spotify streams vs YouTube views correlation analysis (ρ = 0.608).</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Influencer Tiers (2024)</h3>
+                    <img src="data/processed/analysis/advanced/influencer_tiers.png" alt="Influencer Tiers" class="card-image" onclick="openModal(this)">
+                    <p class="card-description">Distribution of mega, macro, mid, micro, and nano influencers across 61 countries.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Sources -->
+        <section id="sources" class="sources">
+            <h2>📚 Data Sources & Citations</h2>
+            <div class="source-list">
+                <div class="source-item">
+                    <h3>Global YouTube Statistics 2023</h3>
+                    <p>Top 995 YouTube channels worldwide with subscribers, views, category, and country data.</p>
+                    <a href="https://www.kaggle.com/datasets/nelgiriyewithana/global-youtube-statistics-2023" target="_blank">Kaggle Dataset →</a>
+                </div>
+                <div class="source-item">
+                    <h3>YouTube Trending Videos (Historical)</h3>
+                    <p>375,942 trending videos from 10 countries (US, GB, CA, DE, FR, IN, JP, KR, MX, RU) - Nov 2017 to Jun 2018.</p>
+                    <a href="https://www.kaggle.com/datasets/datasnaek/youtube-new" target="_blank">Kaggle Dataset →</a>
+                </div>
+                <div class="source-item">
+                    <h3>Most Subscribed YouTube Channels</h3>
+                    <p>Top 1,000 most subscribed YouTube channels with subscribers, video count, and start year.</p>
+                    <a href="https://www.kaggle.com/datasets/themrityunjaypathak/most-subscribed-1000-youtube-channels" target="_blank">Kaggle Dataset →</a>
+                </div>
+                <div class="source-item">
+                    <h3>Top 100 Social Media Influencers 2024</h3>
+                    <p>YouTube, Instagram, TikTok, and Threads influencers from 61 countries.</p>
+                    <a href="https://www.kaggle.com/datasets/bhavyadhingra00020/top-100-social-media-influencers-2024-countrywise" target="_blank">Kaggle Dataset →</a>
+                </div>
+                <div class="source-item">
+                    <h3>Spotify & YouTube Music Data</h3>
+                    <p>20,718 tracks with Spotify streams and YouTube views for cross-platform analysis.</p>
+                    <a href="https://www.kaggle.com/datasets/salvatorerastelli/spotify-and-youtube" target="_blank">Kaggle Dataset →</a>
+                </div>
+                <div class="source-item">
+                    <h3>GitHub: Top Subscribed Channels</h3>
+                    <p>Top 1,000 subscribed YouTube channels dataset from GitHub.</p>
+                    <a href="https://github.com/juliusbroomfield/channel-growth-model" target="_blank">GitHub Repository →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Created with 🔬 Advanced Machine Learning | Data Analysis Project</p>
+        <p style="margin-top: 10px; font-size: 0.85rem;">
+            Analysis performed: December 2024 | 
+            <a href="https://github.com" style="color: #4facfe;">View on GitHub</a>
+        </p>
+    </footer>
+
+    <!-- Modal for enlarged images -->
+    <div class="modal" id="imageModal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Enlarged view">
+    </div>
+
+    <script>
+        function openModal(img) {
+            document.getElementById('imageModal').classList.add('active');
+            document.getElementById('modalImage').src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
